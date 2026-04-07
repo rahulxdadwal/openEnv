@@ -13,7 +13,7 @@ tags:
 
 # Customer Support Triage Environment
 
-A real-world OpenEnv environment for training and evaluating agents on customer support operations. The agent must handle realistic support tickets across three workflow stages:
+A real-world OpenEnv environment for training and  evaluating agents on customer support operations. The agent must handle realistic support tickets across three workflow stages:
 
 1. Triage the ticket
 2. Choose the next operational action
