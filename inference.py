@@ -1,10 +1,7 @@
-# submission-refresh-2026-04-08
-
-
-
 """
 Submission inference script for the Customer Support Triage environment.
 """
+# submission-refresh-2026-04-08-v2
 
 from __future__ import annotations
 
@@ -37,6 +34,11 @@ ENV_BASE_URL = os.getenv("ENV_BASE_URL")
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
 MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-72B-Instruct")
 HF_TOKEN = os.getenv("HF_TOKEN")
+USE_DOCKER_INFERENCE = os.getenv("USE_DOCKER_INFERENCE", "false").lower() in {
+    "1",
+    "true",
+    "yes",
+}
 BENCHMARK = "customer_support_triage"
 TASKS = [
     task.strip()
@@ -302,7 +304,7 @@ async def create_env() -> CustomerSupportTriageEnv:
     if ENV_BASE_URL:
         return CustomerSupportTriageEnv(base_url=ENV_BASE_URL)
 
-    if LOCAL_IMAGE_NAME:
+    if USE_DOCKER_INFERENCE and LOCAL_IMAGE_NAME:
         try:
             return await CustomerSupportTriageEnv.from_docker_image(LOCAL_IMAGE_NAME)
         except Exception as exc:
